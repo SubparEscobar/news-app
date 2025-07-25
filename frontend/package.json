@@ -1,0 +1,22 @@
+{
+  "name": "news-app",
+  "version": "1.0.0",
+  "description": "This is a sample news website",
+  "source": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node ../news-proxy-server/server.js",
+    "client": "live-server --port=8080 --open=/index.html"
+  },
+  "keywords": [],
+  "author": "Aaron Escobar",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.15.4"
+  },
+  "dependencies": {
+    "concurrently": "^9.2.0",
+    "live-server": "^1.2.2"
+  }
+}

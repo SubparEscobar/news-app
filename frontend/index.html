@@ -3,11 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News App</title>
+    <title>NewsHub - Latest Breaking News</title>
+    <link href="./output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <h1>Top Headlines</h1>
-    <div id="news"></div>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-primary-600">NewsHub</h1>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="text-gray-900 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Politics</a>
+                        <a href="#" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Technology</a>
+                        <a href="#" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Sports</a>
+                        <a href="#" class="text-gray-500 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Business</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="refreshBtn" class="btn-secondary">
+                        <i class="fas fa-sync-alt mr-2"></i>Refresh
+                    </button>
+                    <div class="md:hidden">
+                        <button id="mobileMenuBtn" class="text-gray-500 hover:text-primary-600">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-gray-200">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="#" class="text-gray-900 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+            <a href="#" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">Politics</a>
+            <a href="#" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">Technology</a>
+            <a href="#" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">Sports</a>
+            <a href="#" class="text-gray-500 hover:text-primary-600 block px-3 py-2 rounded-md text-base font-medium">Business</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-3xl font-bold text-gray-900">Top Headlines</h2>
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-500">Last updated:</span>
+                    <span id="lastUpdated" class="text-sm font-medium text-gray-700"></span>
+                </div>
+            </div>
+            <p class="text-gray-600">Stay informed with the latest breaking news from around the world.</p>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="hidden">
+            <div class="flex items-center justify-center py-12">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                <span class="ml-3 text-gray-600">Loading latest news...</span>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="hidden">
+            <div class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+                <i class="fas fa-exclamation-triangle text-red-500 text-3xl mb-4"></i>
+                <h3 class="text-lg font-medium text-red-800 mb-2">Failed to load news</h3>
+                <p class="text-red-600 mb-4">We're having trouble fetching the latest news. Please try again.</p>
+                <button id="retryBtn" class="btn-primary">
+                    <i class="fas fa-redo mr-2"></i>Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- News Grid -->
+        <div id="newsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- News cards will be dynamically inserted here -->
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-12">
+            <button id="loadMoreBtn" class="btn-primary hidden">
+                <i class="fas fa-plus mr-2"></i>Load More Articles
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-primary-400 mb-4">NewsHub</h3>
+                    <p class="text-gray-300">Your trusted source for the latest breaking news and in-depth coverage.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Categories</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">Politics</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Technology</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Sports</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Business</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                <p>&copy; 2024 NewsHub. All rights reserved. Powered by NewsAPI.org</p>
+            </div>
+        </div>
+    </footer>
+
     <script src="scripts.js" type="module"></script>
 </body>
 </html>

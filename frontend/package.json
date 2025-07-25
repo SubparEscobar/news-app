@@ -5,15 +5,20 @@
   "source": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "concurrently \"npm run server\" \"npm run client\" \"npm run build:css\"",
     "server": "node ../news-proxy-server/server.js",
-    "client": "live-server --port=8080 --open=/index.html"
+    "client": "live-server --port=8080 --open=/index.html",
+    "build:css": "tailwindcss -i ./input.css -o ./output.css --watch",
+    "build:css:prod": "tailwindcss -i ./input.css -o ./output.css --minify"
   },
   "keywords": [],
   "author": "Aaron Escobar",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^2.15.4"
+    "parcel": "^2.15.4",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.31",
+    "autoprefixer": "^10.4.16"
   },
   "dependencies": {
     "concurrently": "^9.2.0",

@@ -103,7 +103,7 @@ function displayNews(articles) {
 
 function createArticleCard(article, index) {
     const card = document.createElement('div');
-    card.className = 'news-card group';
+    card.className = 'news-card';
     
     // Format the published date
     const publishedDate = article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Unknown date';
@@ -112,36 +112,31 @@ function createArticleCard(article, index) {
     const imageUrl = article.urlToImage || 'https://via.placeholder.com/400x250/3b82f6/ffffff?text=News';
     
     card.innerHTML = `
-        <div class="relative overflow-hidden">
+        <div class="card-image">
             <img src="${imageUrl}" 
                  alt="${article.title || 'News image'}" 
-                 class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                  onerror="this.src='https://via.placeholder.com/400x250/3b82f6/ffffff?text=News'">
-            <div class="absolute top-4 left-4">
-                <span class="bg-primary-600 text-white text-xs font-medium px-2 py-1 rounded-full">
-                    ${article.source?.name || 'News'}
-                </span>
+            <div class="source-badge">
+                ${article.source?.name || 'News'}
             </div>
-            <div class="absolute top-4 right-4">
-                <span class="bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
-                    ${publishedDate}
-                </span>
+            <div class="date-badge">
+                ${publishedDate}
             </div>
         </div>
         
-        <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors">
+        <div class="card-content">
+            <h3 class="card-title">
                 ${article.title || 'No title available'}
             </h3>
             
-            <p class="text-gray-600 mb-4 line-clamp-3">
+            <p class="card-description">
                 ${article.description || 'No description available'}
             </p>
             
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                    <span class="text-xs text-gray-500">By</span>
-                    <span class="text-sm font-medium text-gray-700">
+            <div class="card-footer">
+                <div class="author-info">
+                    <span class="author-label">By</span>
+                    <span class="author-name">
                         ${article.author || 'Unknown Author'}
                     </span>
                 </div>
@@ -149,8 +144,8 @@ function createArticleCard(article, index) {
                 <a href="${article.url}" 
                    target="_blank" 
                    rel="noopener noreferrer"
-                   class="btn-primary text-sm">
-                    <i class="fas fa-external-link-alt mr-1"></i>
+                   class="btn btn-primary">
+                    <i class="fas fa-external-link-alt"></i>
                     Read More
                 </a>
             </div>
@@ -169,21 +164,3 @@ function createArticleCard(article, index) {
     
     return card;
 }
-
-// Add some CSS for line clamping (since Tailwind doesn't include it by default)
-const style = document.createElement('style');
-style.textContent = `
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    .line-clamp-3 {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-`;
-document.head.appendChild(style);

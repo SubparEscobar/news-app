@@ -109,13 +109,13 @@ function createArticleCard(article, index) {
     const publishedDate = article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Unknown date';
     
     // Create a fallback image if none is provided
-    const imageUrl = article.urlToImage || 'https://via.placeholder.com/400x250/3b82f6/ffffff?text=News';
+    const imageUrl = article.urlToImage || `https://picsum.photos/400/250?random=${index + 10}`;
     
     card.innerHTML = `
         <div class="card-image">
             <img src="${imageUrl}" 
                  alt="${article.title || 'News image'}" 
-                 onerror="this.src='https://via.placeholder.com/400x250/3b82f6/ffffff?text=News'">
+                 onerror="this.src='https://picsum.photos/400/250?random=${index + 20}'">
             <div class="source-badge">
                 ${article.source?.name || 'News'}
             </div>

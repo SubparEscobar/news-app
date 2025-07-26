@@ -137,3 +137,38 @@ This project is ready for deployment to:
 ---
 
 **Created by Aaron Escobar** | **Powered by NewsAPI.org**
+
+##  **Found the Issue!**
+
+The problem is the `.env~` file in your `news-proxy-server` directory. This is a backup file that might contain your API key, and it's **not being ignored by Git** because the `.gitignore` only ignores `.env` but not `.env~`.
+
+### **What to do immediately:**
+
+1. **Delete the `.env~` file:**
+   ```bash
+   rm news-proxy-server/.env~
+   ```
+
+2. **Update your `.gitignore` to ignore backup files:**
+   Add these lines to your `.gitignore`:
+   ```
+   .env*
+   *.env
+   ```
+
+3. **Remove the file from Git history:**
+   ```bash
+   git rm --cached news-proxy-server/.env~
+   git commit -m "Remove .env~ backup file"
+   ```
+
+4. **If the API key was exposed, rotate it:**
+   - Go to [NewsAPI.org](https://newsapi.org/) and generate a new API key
+   - Update your `.env` file with the new key
+
+### **Why this happened:**
+- The `.env~` file is a backup created by some text editors
+- Your `.gitignore` only ignores `.env` but not `.env~`
+- GitHub detected this file and flagged it as a potential security risk
+
+Let me help you fix this by updating the `.gitignore` file:

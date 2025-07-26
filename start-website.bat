@@ -9,7 +9,7 @@ echo Waiting 3 seconds for backend to start...
 timeout /t 3 /nobreak > nul
 
 echo Starting frontend server...
-start "Frontend Server" cmd /k "cd frontend && live-server --port=8080 --open=/index.html"
+start "Frontend Server" cmd /k "cd frontend && npx http-server -p 8080 -o"
 
 echo.
 echo Website is starting up!

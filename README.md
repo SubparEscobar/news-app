@@ -28,7 +28,7 @@ The website is now fully functional with:
 2. **Start Frontend Server (in a new terminal):**
    ```bash
    cd frontend
-   live-server --port=8080 --open=/index.html
+   npx http-server -p 8080 -o
    ```
 
 ## 🌐 **Access Your Website**
@@ -136,4 +136,4 @@ This project is ready for deployment to:
 
 ---
 
-**Created by Aaron Escobar** | **Powered by NewsAPI.org** 
+**Created by Aaron Escobar** | **Powered by NewsAPI.org**
